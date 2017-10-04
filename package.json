@@ -1,0 +1,17 @@
+{
+  "name": "diy-express",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node bin",
+    "test": "mocha **/*.spec.js --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mocha": "^4.0.0",
+    "supertest": "^3.0.0"
+  }
+}
