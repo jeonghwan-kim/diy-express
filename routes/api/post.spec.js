@@ -18,11 +18,11 @@ describe('GET /api/posts', () => {
     })
 
     it('array 응답', () => {
-      assert.equal(res.body instanceof Array, true)
+      assert.equal(res.body.list instanceof Array, true)
     })
 
     it('title, body 응답', () => {
-      res.body.forEach(post => {
+      res.body.list.forEach(post => {
         assert.equal(Object.keys(post).includes('title'), true)
         assert.equal(Object.keys(post).includes('body'), true)
       })
@@ -36,7 +36,7 @@ describe('GET /api/posts', () => {
       request(app.server).
         get(`/api/posts?limit=${limit}`).
         expect(res => {
-          assert.equal(res.body.length, limit)
+          assert.equal(res.body.list.length, limit)
         }).
         end(done)
     })
