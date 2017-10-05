@@ -1,6 +1,6 @@
 const fs = require('fs')
 const path = require('path')
-const debug = require('./debug')('static-serve')
+const debug = require('../modules/debug')('static-serve')
 
 const staticServe = (req, res, next) => {
   const mimeType = {
@@ -19,7 +19,10 @@ const staticServe = (req, res, next) => {
 
   if (Object.keys(mimeType).includes(ext)) {
     fs.readFile(`${publicPath}${req.url}`, (err, data) => {
-      if (err) return next(err)
+      if (err) {
+        debug(err.message)
+        return next()
+      }
 
       res.statusCode = 200
       res.setHeader('Content-Type', mimeType[ext]);
