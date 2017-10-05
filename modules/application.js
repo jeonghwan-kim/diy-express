@@ -23,7 +23,8 @@ const Application = () => {
       }
 
       if (nextMw.__path) {
-        if (req.path === nextMw.__path) return nextMw(req, res, next())
+        const isMatched = req.path === nextMw.__path && req.method.toLowerCase() === (nextMw.__method || 'get')
+        if (isMatched) return nextMw(req, res, next())
         else return runMw(middlewares, i + 1)
       }
 
@@ -35,26 +36,44 @@ const Application = () => {
 
   let middlewares = []
 
+  const use = (path, fn) => {
+    if (fn) debug(`use(${path}, ${fn.name})`)
+    else debug(`use(${path.name})`)
+
+    if (typeof path === 'string' && typeof fn === 'function') {
+      fn.__path = path
+    } else if (typeof path == 'function') {
+      fn = path
+    } else {
+      throw Error('Usage: use(path, fn) or use(fn)')
+    }
+
+    middlewares.push(fn)
+  }
+
+  const get = (path, fn) => {
+    if (!path || !fn) throw Error('path and fn is required')
+    fn.__method = 'get'
+    use(path, fn)
+  };
+
+  const post = (path, fn) => {
+    if (!path || !fn) throw Error('path and fn is required')
+    fn.__method = 'post'
+    use(path, fn)
+  };
+
+  const listen = (port = 3000, hostname = '127.0.0.1', fn) => {
+    debug('listen()')
+    server.listen(port, hostname, fn)
+  }
+
   return {
-    use(path, fn) {
-      if (fn) debug(`use(${path}, ${fn.name})`)
-      else debug(`use(${path.name})`)
-
-      if (typeof path === 'string' && typeof fn === 'function') {
-        fn.__path = path
-      } else if (typeof path == 'function') {
-        fn = path
-      } else {
-        throw Error('Usage: use(path, fn) or use(fn)')
-      }
-
-      middlewares.push(fn)
-    },
-    listen(port = 3000, hostname = '127.0.0.1', fn) {
-      debug('listen()')
-      server.listen(port, hostname, fn)
-    },
-    server
+    use,
+    get,
+    post,
+    listen,
+    server,
   }
 }
 
