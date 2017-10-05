@@ -4,13 +4,15 @@ const http = (method, url, data = null) => new Promise((resolve, reject) => {
   req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
   req.onreadystatechange = evt => {
-    if (req.readyState == 4 && req.status == 200) {
-      resolve(req.responseText)
-    } else {
-      reject({
-        status: req.status,
-        responseText: req.responseText
-      })
+    if (req.readyState == 4) {
+      if(req.status == 200) {
+        resolve(req.responseText)
+      } else {
+        reject({
+          status: req.status,
+          responseText: req.responseText
+        })
+      }
     }
   }
   req.send(data)

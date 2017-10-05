@@ -1,8 +1,13 @@
 const http = require('http')
 const debug = require('./debug')('application')
+const request = require('./request')
+const response = require('./response')
 
 const Application = () => {
   const server = http.createServer((req, res) => {
+    req = request(req)
+    res = response(res)
+
     const runMw = (middlewares, i, err) => {
       if (i < 0 || i >= middlewares.length) return;
 
@@ -18,7 +23,7 @@ const Application = () => {
       }
 
       if (nextMw.__path) {
-        if (req.url === nextMw.__path) return nextMw(req, res, next())
+        if (req.path === nextMw.__path) return nextMw(req, res, next())
         else return runMw(middlewares, i + 1)
       }
 
@@ -32,6 +37,9 @@ const Application = () => {
 
   return {
     use(path, fn) {
+      if (fn) debug(`use(${path}, ${fn.name})`)
+      else debug(`use(${path.name})`)
+
       if (typeof path === 'string' && typeof fn === 'function') {
         fn.__path = path
       } else if (typeof path == 'function') {
@@ -39,8 +47,6 @@ const Application = () => {
       } else {
         throw Error('Usage: use(path, fn) or use(fn)')
       }
-
-      debug(`use(${path}, ${fn.name})`)
 
       middlewares.push(fn)
     },

@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "DEBUG=true node bin",
-    "test": "NODE_ENV=test mocha *.spec.js **/*.spec.js --watch"
+    "start": "NODE_ENV=development DEBUG=true node bin",
+    "test": "NODE_ENV=test mocha $(find ./ -name '*.spec.js') --recursive --watch"
   },
   "keywords": [],
   "author": "",

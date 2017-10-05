@@ -11,6 +11,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 app.use(staticServe())
+app.use('/api/posts', require('./routes/api/post').index)
 app.use('/hello-world', require('./routes/hello-world'))
 app.use('/', require('./routes/index'))
 app.use(errors.error404)
