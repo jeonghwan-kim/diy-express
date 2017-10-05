@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node bin",
+    "start": "DEBUG=true node bin",
     "test": "mocha *.spec.js **/*.spec.js --watch"
   },
   "keywords": [],

@@ -1,3 +1,5 @@
+const debugEnabled = process.env.DEBUG || false
+
 const colors = [
   {name: 'cyan',     value: '\x1b[36m'},
   {name: 'yellow',   value: '\x1b[33m'},
@@ -12,6 +14,7 @@ const debug = tag => {
   const color = colors[randIdx]
 
   return (...msg) => {
+    if (!debugEnabled) return
     console.log(`${color.value}[${tag}]${resetColor}`, ...msg)
   }
 }
