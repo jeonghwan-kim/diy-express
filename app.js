@@ -6,14 +6,13 @@ const app = require('./modules/application')()
 
 debug('app is initiated')
 
-
 if (process.env.NODE_ENV === 'development') {
   app.use(logger())
 }
 
 app.use(staticServe())
-app.use(require('./routes/hello-world'))
-app.use(require('./routes/index'))
+app.use('/hello-world', require('./routes/hello-world'))
+app.use('/', require('./routes/index'))
 app.use(errors.error404)
 app.use(errors.error)
 

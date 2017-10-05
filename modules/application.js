@@ -17,6 +17,11 @@ const Application = () => {
         return runMw(middlewares, i + 1, err)
       }
 
+      if (nextMw.__path) {
+        if (req.url === nextMw.__path) return nextMw(req, res, next())
+        else return runMw(middlewares, i + 1)
+      }
+
       return nextMw(req, res, next())
     }
 
@@ -26,8 +31,17 @@ const Application = () => {
   let middlewares = []
 
   return {
-    use(fn) {
-      debug(`use(${fn.name})`)
+    use(path, fn) {
+      if (typeof path === 'string' && typeof fn === 'function') {
+        fn.__path = path
+      } else if (typeof path == 'function') {
+        fn = path
+      } else {
+        throw Error('Usage: use(path, fn) or use(fn)')
+      }
+
+      debug(`use(${path}, ${fn.name})`)
+
       middlewares.push(fn)
     },
     listen(port = 3000, hostname = '127.0.0.1', fn) {
