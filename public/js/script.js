@@ -1,3 +1,5 @@
+const tag = '[script]'
+
 const http = (method, url, data = null) => new Promise((resolve, reject) => {
   const req = new  XMLHttpRequest()
   req.open(method, url, true)
@@ -5,12 +7,15 @@ const http = (method, url, data = null) => new Promise((resolve, reject) => {
 
   req.onreadystatechange = evt => {
     if (req.readyState == 4) {
+      const responseText = JSON.parse(req.responseText.trim())
+      console.log(tag, req.status, responseText)
+
       if(req.status == 200) {
-        resolve(req.responseText)
+        resolve(responseText)
       } else {
         reject({
           status: req.status,
-          responseText: req.responseText
+          responseText
         })
       }
     }
@@ -22,8 +27,8 @@ export const post = {
   create(title, body) {
     return http('post', '/api/posts', `title=${title}&body=${body}`)
   },
-  list() {
-    return http('get', '/api/posts')
+  list(page) {
+    return http('get', `/api/posts?page=${page}`)
   }
 }
 

@@ -1,0 +1,39 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+.container {
+    padding: 0 15px;
+}
+.header {
+    margin-bottom: 30px;
+    border-bottom: 1px gray solid;
+    background-color: #333;
+    color: white;
+}
+.header h1 {
+    margin: 0;
+    padding: 15px 0;
+}
+.header a {
+    color: white;
+    text-decoration: none;
+}
+.posts {
+    margin-bottom: 30px;
+}
+.posts ul {
+    list-style: none;
+    padding-left: 0;
+}
+.posts ul li {
+    margin-bottom: 30px;
+}
+.pagination ul {
+    list-style: none;
+    padding-left: 0;
+}
+.pagination ul li {
+    display: inline-block;
+    margin-right: 15px;
+}
