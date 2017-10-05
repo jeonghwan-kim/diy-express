@@ -33,7 +33,8 @@ const Application = () => {
     listen(port = 3000, hostname = '127.0.0.1', fn) {
       debug('listen()')
       server.listen(port, hostname, fn)
-    }
+    },
+    server
   }
 }
 
