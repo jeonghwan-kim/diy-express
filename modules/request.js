@@ -12,7 +12,8 @@ const request = req => {
     return obj
   }, {})
 
-  debug(path, qs)
+  debug('path:', path, 'qs: ', qs)
+
   req.path = req.path || path
   req.params = req.params || qs
 

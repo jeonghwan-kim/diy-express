@@ -1,13 +1,17 @@
-const fs = require('fs')
-const path = require('path')
+const debug = require('../modules/debug')('index')
 
-const index = (req, res, next) => {
-  const publicPath = path.join(__dirname, '../public')
-  fs.readFile(`${publicPath}/index.html`, (err, data) => {
-    if (err) throw err
-
-    res.set('Content-Type', 'text/html').send(data)
-  })
+const listPost = (req, res, next) => {
+  debug('listPost()')
+  const data = {title: 'Blog'}
+  res.render('index', data)
 }
 
-module.exports = index
+const newPost = (req, res, next) => {
+  const data = {title: 'New | Blog'}
+  res.render('new', data)
+}
+
+module.exports = {
+  listPost,
+  newPost
+}

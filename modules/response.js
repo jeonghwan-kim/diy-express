@@ -54,6 +54,7 @@ const respose = (res, appData) => {
 
     fs.readFile(`${appData.views}/${view}.view`, (err, file) => {
       if (err) return next(err)
+
       render(file.toString(), html => {
 
         Object.keys(data).forEach(key => {

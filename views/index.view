@@ -1,14 +1,15 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Blog</title>
-</head>
-<body>
-include 'header.view'
 include 'header.view'
 
-<div>index view</div>
-<div>{{msg}}</div>
-<h1>{{msg}}</h1>
+<div class="content">
+    <div class="container">
+        <div class="posts"></div>
+    </div>
+
+    <div class="container">
+        <div class="pagination"></div>
+    </div>
+</div>
+
+<script type="module" src="js/index.js"></script>
 </body>
 </html>
