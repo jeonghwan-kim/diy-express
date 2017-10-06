@@ -1,3 +1,4 @@
+const path = require('path')
 const staticServe = require('./middlewares/static-serve')
 const bodyParser = require('./middlewares/body-parser')
 const errors = require('./middlewares/errors')
@@ -6,6 +7,8 @@ const debug = require('./modules/debug')('app')
 const app = require('./modules/application')()
 
 debug('app is initiated')
+
+app.set('views', path.join(__dirname, './views'))
 
 if (process.env.NODE_ENV === 'development') {
   app.use(logger())

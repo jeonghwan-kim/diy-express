@@ -1,4 +1,6 @@
 const http = require('http')
+const fs = require('fs')
+const path = require('path')
 const debug = require('./debug')('application')
 const request = require('./request')
 const response = require('./response')
@@ -7,6 +9,7 @@ const Application = () => {
   const server = http.createServer((req, res) => {
     req = request(req)
     res = response(res)
+    res = createRenderFn(res)
 
     const runMw = (middlewares, i, err) => {
       if (i < 0 || i >= middlewares.length) return;
@@ -74,6 +77,51 @@ const Application = () => {
     server.listen(port, hostname, fn)
   }
 
+  const set = (key, value) => {
+    appData[key] = value
+  }
+
+  const appData = {}
+
+  const createRenderFn = (res) => {
+    if (!appData.views) throw Error('views path is required')
+
+    res.render = ((view, data) => {
+      fs.readFile(`${appData.views}/${view}.view`, (err, file) => {
+        if (err) return next(err)
+        render(file.toString(), html => {
+          res.set('Content-Type', 'text/html').send(html)
+        })
+      })
+    })
+
+    return res
+  }
+
+  const render = (html, cb) => {
+    let {text, partialName} = findPartials(html)
+
+    if (!partialName) return cb(html)
+
+    fs.readFile(`${appData.views}/${partialName}`, (err, file) => {
+      if (err) throw err
+
+      text = text.replace(`{{{${partialName}}}}`, file.toString())
+      render(text, cb)
+    })
+  }
+
+  const findPartials = text => {
+    let partialName = text.match(/include '.*\.view'/)
+
+    if (!partialName) return {text, partialName}
+
+    partialName = partialName[0].replace(/include '(.*\.view)'/, '$1')
+    text = text.replace(/include '(.*\.view)'/, '{{{$1}}}')
+
+    return {text, partialName}
+  }
+
   return {
     use,
     get,
@@ -81,6 +129,7 @@ const Application = () => {
     delete: destroy,
     listen,
     server,
+    set,
   }
 }
 
