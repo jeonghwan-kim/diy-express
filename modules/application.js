@@ -90,6 +90,11 @@ const Application = () => {
       fs.readFile(`${appData.views}/${view}.view`, (err, file) => {
         if (err) return next(err)
         render(file.toString(), html => {
+
+          Object.keys(data).forEach(key => {
+            html = html.replace(RegExp(`{{*${key}}}`, 'g'), data[key])
+          })
+
           res.set('Content-Type', 'text/html').send(html)
         })
       })

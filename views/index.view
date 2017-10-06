@@ -8,5 +8,7 @@ include 'header.view'
 include 'header.view'
 
 <div>index view</div>
+<div>{{msg}}</div>
+<h1>{{msg}}</h1>
 </body>
 </html>
