@@ -12,7 +12,11 @@ const bindEvents = () => {
     const body = e.target.body.value || ''
 
     post.create(title, body).
-      then(data => console.log(data)).
+      then(data => {
+        console.log(data)
+        alert('saved')
+        window.location.href = '/'
+      }).
       catch(err => console.log(err))
   })
 }

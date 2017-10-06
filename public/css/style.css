@@ -2,6 +2,11 @@ body {
     margin: 0;
     padding: 0;
 }
+ul {
+    list-style: none;
+    padding: 0 0 0 0;
+    margin: 0 0 0 0;
+}
 .container {
     padding: 0 15px;
 }
@@ -19,19 +24,18 @@ body {
     color: white;
     text-decoration: none;
 }
+.header nav {
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    right: 10px;
+    line-height: 69px;
+}
 .posts {
     margin-bottom: 30px;
 }
-.posts ul {
-    list-style: none;
-    padding-left: 0;
-}
 .posts ul li {
     margin-bottom: 30px;
-}
-.pagination ul {
-    list-style: none;
-    padding-left: 0;
 }
 .pagination ul li {
     display: inline-block;

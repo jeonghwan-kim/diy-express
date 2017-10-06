@@ -5,21 +5,29 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<h1>Create Blog</h1>
-<form id="new-form">
-    <p>
-        <input type="text" name="title" placeholder="title" autofocus>
-    </p>
-    <p>
-        <textarea name="body" placeholder="type something..."></textarea>
-    </p>
-    <p>
-        <button type="submit">Save</button>
-        <button type="reset">Cancel</button>
-    </p>
+<div class="header">
+    <div class="container">
+        <h1><a href="/"><</a> New Post</h1>
+    </div>
+</div>
 
+<div class="content">
+    <div class="container">
 
-</form>
+        <form id="new-form">
+            <p>
+                <input type="text" name="title" placeholder="title" autofocus>
+            </p>
+            <p>
+                <textarea name="body" placeholder="type something..."></textarea>
+            </p>
+            <p>
+                <button type="submit">Save</button>
+                <button type="reset">Cancel</button>
+            </p>
+        </form>
+    </div>
+</div>
 <script type="module" src="js/new.js"></script>
 </body>
 </html>

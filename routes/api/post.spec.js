@@ -41,5 +41,25 @@ describe('GET /api/posts', () => {
         end(done)
     })
   })
-
 });
+
+describe('POST /api/posts', () => {
+  it('201, new post object',done=> {
+    request(app.server).
+      post('/api/posts').
+      send('title=newtitle&body=newbody').
+      expect(201).
+      expect(res => {
+        assert.equal(res.body.title, 'newtitle')
+        assert.equal(res.body.body, 'newbody')
+      }).
+      end(done)
+  })
+  it('400', done=> {
+    request(app.server).
+      post('/api/posts').
+      expect(400).
+      end(done)
+  })
+
+})
