@@ -19,6 +19,7 @@ app.post('/api/posts', require('./routes/api/post').create)
 app.delete('/api/posts', require('./routes/api/post').destroy)
 app.get('/hello-world', require('./routes/hello-world'))
 app.get('/', require('./routes/index'))
+app.get('/index2.html', require('./routes/index2').index)
 
 app.use(errors.error404)
 app.use(errors.error)
