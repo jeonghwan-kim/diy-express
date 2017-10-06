@@ -16,6 +16,7 @@ app.use(bodyParser())
 
 app.get('/api/posts', require('./routes/api/post').index)
 app.post('/api/posts', require('./routes/api/post').create)
+app.delete('/api/posts', require('./routes/api/post').destroy)
 app.get('/hello-world', require('./routes/hello-world'))
 app.get('/', require('./routes/index'))
 

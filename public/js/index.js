@@ -19,12 +19,27 @@ const renderPosts = data => {
   const html = data.reduce((html, post) => {
     html += `<li>
         <h2>${post.title}</h2><p>${post.body}</p>
-        <a href="/edit.html">편집</a>
+        <a href="#" data-post-id="${post.id}">삭제</a>
       </li>`
     return html
   }, '<ul>') + '</ul>'
+  const bindDeleteLink = () => {
+    const deleteLinks = document.querySelectorAll('.posts ul li a')
+    deleteLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault()
+
+        if (!window.confirm('Delete this post?')) return
+
+        post.destroy(e.target.dataset.postId).
+          then(data => window.location.reload()).
+          catch(e => console.log(e))
+      })
+    })
+  }
 
   document.querySelector('.posts').innerHTML = html
+  bindDeleteLink()
 }
 
 const renderPagination = data => {

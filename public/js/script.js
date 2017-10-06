@@ -7,7 +7,8 @@ const http = (method, url, data = null) => new Promise((resolve, reject) => {
 
   req.onreadystatechange = evt => {
     if (req.readyState == 4) {
-      const responseText = JSON.parse(req.responseText.trim())
+      let responseText = req.responseText.trim()
+      responseText = responseText ? JSON.parse(responseText) : {}
       console.log(tag, req.status, responseText)
 
       if(req.status >= 200) {
@@ -29,6 +30,9 @@ export const post = {
   },
   list(page) {
     return http('get', `/api/posts?page=${page}`)
+  },
+  destroy(id) {
+    return http('delete', `/api/posts?id=${id}`)
   }
 }
 

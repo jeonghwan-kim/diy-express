@@ -63,6 +63,12 @@ const Application = () => {
     use(path, fn)
   };
 
+  const destroy = (path, fn) => {
+    if (!path || !fn) throw Error('path and fn is required')
+    fn.__method = 'delete'
+    use(path, fn)
+  }
+
   const listen = (port = 3000, hostname = '127.0.0.1', fn) => {
     debug('listen()')
     server.listen(port, hostname, fn)
@@ -72,6 +78,7 @@ const Application = () => {
     use,
     get,
     post,
+    delete: destroy,
     listen,
     server,
   }
