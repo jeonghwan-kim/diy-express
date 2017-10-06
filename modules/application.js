@@ -3,6 +3,15 @@ const debug = require('./debug')('application')
 const request = require('./request')
 const response = require('./response')
 
+Function.prototype.clone = function() {
+  var that = this;
+  var temp = function temporary() { return that.apply(this, arguments); };
+  for( key in this ) {
+    temp[key] = this[key];
+  }
+  return temp;
+};
+
 const Application = () => {
   const appData = {}
 
@@ -19,12 +28,14 @@ const Application = () => {
 
       const next = () => e => runMw(middlewares, i + 1, e)
       if (err) {
+        debug(err)
         const isErrorMw = mw => mw.length === 4
         if (isErrorMw(nextMw)) nextMw(err, req, res, next())
         return runMw(middlewares, i + 1, err)
       }
 
       if (nextMw.__path) {
+        debug(nextMw.__path, req.path)
         const isMatched = req.path === nextMw.__path && req.method.toLowerCase() === (nextMw.__method || 'get')
         if (isMatched) return nextMw(req, res, next())
         else return runMw(middlewares, i + 1)
@@ -43,11 +54,12 @@ const Application = () => {
     else debug(`use(${path.name})`)
 
     if (typeof path === 'string' && typeof fn === 'function') {
+      fn = fn.clone()
       fn.__path = path
     } else if (typeof path == 'function') {
       fn = path
     } else {
-      throw Error('Usage: use(path, fn) or use(fn)')
+      throw Error(`Usage: use(path, fn) or use(fn) typeof fn: ${typeof fn}`)
     }
 
     middlewares.push(fn)
@@ -55,18 +67,21 @@ const Application = () => {
 
   const get = (path, fn) => {
     if (!path || !fn) throw Error('path and fn is required')
+    fn = fn.clone()
     fn.__method = 'get'
     use(path, fn)
   };
 
   const post = (path, fn) => {
     if (!path || !fn) throw Error('path and fn is required')
+    fn = fn.clone()
     fn.__method = 'post'
     use(path, fn)
   };
 
   const destroy = (path, fn) => {
     if (!path || !fn) throw Error('path and fn is required')
+    fn = fn.clone()
     fn.__method = 'delete'
     use(path, fn)
   }
