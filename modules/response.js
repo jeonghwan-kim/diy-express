@@ -66,8 +66,9 @@ const respose = (res, appData) => {
     })
   })
 
-
-
+  res.cookie = (name, value) => {
+    res.set('Set-Cookie', [`${name}=${value}`])
+  }
 
   return res
 }
