@@ -11,7 +11,7 @@ const http = (method, url, data = null) => new Promise((resolve, reject) => {
       responseText = responseText ? JSON.parse(responseText) : {}
       console.log(tag, req.status, responseText)
 
-      if(req.status >= 200) {
+      if(req.status >= 200 && req.status < 300) {
         resolve(responseText)
       } else {
         reject({
