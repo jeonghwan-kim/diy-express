@@ -28,8 +28,12 @@ ul {
     display: inline-block;
     position: absolute;
     top: 0;
-    right: 10px;
+    right: 5px;
     line-height: 69px;
+}
+.header nav li {
+    display: inline-block;
+    margin: 0 10px;
 }
 .posts {
     margin-bottom: 30px;
