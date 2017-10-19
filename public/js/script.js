@@ -36,3 +36,15 @@ export const post = {
   }
 }
 
+export const auth = {
+  login(email, password) {
+    return http('post', '/api/auth/login', `email=${email}&password=${password}`)
+  },
+  logout() {
+    return http('delete', '/api/auth/logout')
+  },
+  me() {
+    return http('get', '/api/auth/me')
+  }
+}
+
