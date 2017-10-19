@@ -18,7 +18,9 @@ const renderPosts = data => {
   console.log(tag, data)
   const html = data.reduce((html, post) => {
     html += `<li>
-        <h2>${post.title}</h2><p>${post.body}</p>
+        <h2>${post.title}</h2>
+        <small>Author: ${post.author}</small>
+        <p>${post.body}</p>
         <a href="#" data-post-id="${post.id}">삭제</a>
       </li>`
     return html

@@ -1,0 +1,9 @@
+include 'header.view'
+
+<div class="content">
+    <div class="container">
+      My Email: {{email}}
+    </div>
+</div>
+
+include 'footer.view'

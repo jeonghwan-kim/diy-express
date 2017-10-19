@@ -10,6 +10,8 @@ const listPost = (req, res, next) => {
 }
 
 const newPost = (req, res, next) => {
+  if (!req.session.user) return res.redirect('/login.html')
+
   const data = {
     title: 'New Post',
     scriptPath: 'js/new.js'
@@ -17,7 +19,27 @@ const newPost = (req, res, next) => {
   res.render('new', data)
 }
 
+const login = (req, res, next) => {
+  if (req.session.user) return res.redirect('/')
+
+  res.render('login', {
+    title: 'Login',
+    scriptPath: 'js/login.js'
+  })
+}
+
+const me = (req, res, next) => {
+  const user = req.session.user
+  if (!user) return res.redirect('/login.html')
+  res.render('me', {
+    title: 'Me',
+    email: user.email
+  })
+}
+
 module.exports = {
   listPost,
-  newPost
+  newPost,
+  login,
+  me
 }

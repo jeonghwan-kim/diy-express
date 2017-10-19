@@ -27,9 +27,16 @@ app.use(pageviewCounter())
 app.get('/api/posts', require('./routes/api/post').index)
 app.post('/api/posts', require('./routes/api/post').create)
 app.delete('/api/posts', require('./routes/api/post').destroy)
+
+app.post('/api/auth/login', require('./routes/api/auth').login)
+app.get('/api/auth/logout', require('./routes/api/auth').logout)
+app.get('/api/auth/me', require('./routes/api/auth').me)
+
 app.get('/hello-world', require('./routes/hello-world'))
 app.get('/new.html', index.newPost)
 app.get('/index.html', index.listPost)
+app.get('/login.html', index.login)
+app.get('/me.html', index.me)
 app.get('/', index.listPost)
 
 app.use(errors.error404)
