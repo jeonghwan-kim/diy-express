@@ -70,6 +70,10 @@ const respose = (res, appData) => {
     res.set('Set-Cookie', [`${name}=${value}`])
   }
 
+  res.redirect = path => {
+    res.status(302).set('Location', path).end()
+  }
+
   return res
 }
 
