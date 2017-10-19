@@ -1,0 +1,19 @@
+include 'header.view'
+
+<div class="content">
+    <div class="container">
+        <form id="login-form">
+          <p>
+            <input type="email" name="email" placeholder="Email" autofocus />
+          </p>
+          <p>
+            <input type="password" name="password" placeholder="Password" />
+          </p>
+          <p>
+            <button type="submit">Login</button>
+          </p>
+        </form>
+    </div>
+</div>
+
+include 'footer.view'
